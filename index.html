@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semanda 9: Forms</title>
+    <style>
+        .pessoa > .idade {
+            color: darkred;
+        }
+        .pessoa {
+            color: darkgreen;
+            display: inline;
+        }
+        .sobrenome {
+            color: darkblue;
+        }
+        
+        .sobrenome::before {
+            content: ' ';
+        }
+        .idade::before {
+            content: ', ';
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Semanda 9: Forms</h1>
+    </header>
+    <main>
+        <form action="">
+            <input type="text" name="nome"/>
+            <input type="text" name="sobrenome"/>
+            <input type="number" name="idade"/>
+            <input type="date" name="nascimento"/>
+            <input type="submit"/>
+            <input type="reset"/>
+        </form>
+        <p></p>
+        <h2>Visitas passadas:</h2>
+        <ol></ol>
+    </main>
+    <script>
+        const form = document.querySelector("form");
+        form.addEventListener("submit", aoEnviar);
+        //const spanNome = document.querySelector("span");
+        const pNome = document.querySelector("p");
+        const ol = document.querySelector("ol");
+
+        function aoEnviar(evento){
+            evento.preventDefault();
+            console.log("Hello, form!");
+            const nome = form.nome.value;
+            const sobrenome = form.sobrenome.value;
+            const idade = form.idade.valueAsNumber;
+            const nomeCompleto = `${nome} ${sobrenome}, ${idade} anos`;
+            console.log(nomeCompleto);
+            //spanNome.textContent = `Olá <span>${nomeCompleto}</span>!`;
+            pNome.innerHTML = `Olá <span>${nomeCompleto}</span>!`;
+
+            form.reset();
+            form.nome.focus();
+
+            adicionaPessoa(nome, sobrenome, idade);
+        }
+        function adicionaPessoa(nome, sobrenome, idade) {
+            const li = document.createElement('li');
+            const divPessoa = document.createElement('div');
+            divPessoa.classList.add("pessoa");
+
+            const spanNome = document.createElement('span');
+            spanNome.classList.add('nome');
+            spanNome.textContent = nome;
+            divPessoa.appendChild(spanNome);
+
+            const spanSobreome = document.createElement('span');
+            spanSobreome.classList.add('sobrenome');
+            spanSobreome.textContent = sobrenome;
+            divPessoa.appendChild(spanSobreome);
+        
+            const spaIdade = document.createElement('span');
+            spaIdade.classList.add('idade');
+            spaIdade.textContent = idade;
+            divPessoa.appendChild(spaIdade);
+
+            li.appendChild(divPessoa);
+            ol.appendChild(li);
+        }
+    </script>
+</body>
+</html>
